@@ -39,7 +39,7 @@ Before you begin, ensure you have met the following requirements:
 2. **Clone the repository:**
     Navigate to the project directory:
     ```bash
-    cd TalkTalk
+    cd [pathname]
 
 2. **Install dependencies:**
     ```bash
@@ -68,3 +68,6 @@ Visit the generated URL to add the bot to your server.
    ```bash
    npm start
 
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
