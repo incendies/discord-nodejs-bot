@@ -1,7 +1,7 @@
 import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { config } from 'dotenv';
 
-import * as choochoo from './commands/talktalk.js';
+import * as talktalk from './commands/talktalk.js';
 
 config();
 
@@ -19,7 +19,7 @@ async function handleInteraction(interaction) {
   if (!interaction.isCommand()) return;
 
   if (interaction.commandName === 'talktalk') {
-    await choochoo.execute(interaction);
+    await talktalk.execute(interaction);
   } else if (interaction.commandName === 'ping') {
     const pingCommand = await import('./commands/ping.js');
     await pingCommand.execute(interaction);
