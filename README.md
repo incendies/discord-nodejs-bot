@@ -70,6 +70,12 @@ Visit the generated URL to add the bot to your server.
 
 Interact with the bot in your Discord server using the defined command prefix.
 
+## Commands
+
+Here are some example commands you can use with TalkTalk:
+
+!ping - Check if the bot is online.
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
