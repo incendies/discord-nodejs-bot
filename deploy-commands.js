@@ -1,7 +1,7 @@
 // Slash Commands Deployment Script
 // https://discordjs.guide/creating-your-bot/command-deployment.html#guild-commands/
 
-// Importing modules using ES6 syntax
+// ES6 syntax for importing modules
 import { REST, Routes } from 'discord.js';
 import { config } from 'dotenv';
 import fs from 'node:fs';

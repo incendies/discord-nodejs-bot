@@ -68,6 +68,9 @@ Visit the generated URL to add the bot to your server.
    ```bash
    npm start
 
+Interact with the bot in your Discord server using the defined command prefix.
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
+

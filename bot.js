@@ -12,7 +12,7 @@ const client = new Client({
 });
 
 function readyDiscord() {
-  console.log('Talk Talk!', client.user.tag);
+  console.log('Talk Talk is online!', client.user.tag);
 }
 
 async function handleInteraction(interaction) {
@@ -20,6 +20,9 @@ async function handleInteraction(interaction) {
 
   if (interaction.commandName === 'talktalk') {
     await choochoo.execute(interaction);
+  } else if (interaction.commandName === 'ping') {
+    const pingCommand = await import('./commands/ping.js');
+    await pingCommand.execute(interaction);
   }
 }
 
