@@ -74,7 +74,7 @@ Interact with the bot in your Discord server using the defined command prefix.
 
 Here are some example commands you can use with TalkTalk:
 
- * !ping - Check if the bot is online.
+ * /ping - Check if the bot is online.
 
 ## License
 
