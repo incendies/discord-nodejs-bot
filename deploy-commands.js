@@ -1,42 +1,52 @@
 // Slash Commands Deployment Script
 // https://discordjs.guide/creating-your-bot/command-deployment.html#guild-commands/
 
-// ES6 syntax for importing modules
 import { REST, Routes } from 'discord.js';
 import { config } from 'dotenv';
 import fs from 'node:fs';
 
-config(); // Using dotenv config function directly
+// Load environment variables from .env file
+config(); 
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter((file) => file.endsWith('.js'));
 
-// Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
-for (const file of commandFiles) {
-  const command = await import(`./commands/${file}`); // Using dynamic import
-  if ('data' in command && 'execute' in command) {
-    commands.push(command.data.toJSON());
-  } else {
-    console.log(`[WARNING] The command ${file} is missing a required "data" or "execute" property.`);
+// Function to load commands
+async function loadCommands() {
+  for (const file of commandFiles) {
+    try {
+      // Dynamically import the command file
+      const command = await import(`./commands/${file}`);
+      // Check if the command file has the required properties
+      if ('data' in command && 'execute' in command) {
+        commands.push(command.data.toJSON());
+      } else {
+        console.log(`[WARNING] The command ${file} is missing a required "data" or "execute" property.`);
+      }
+    } catch (error) {
+      console.error(`[ERROR] Failed to load command ${file}:`, error);
+    }
   }
 }
 
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(process.env.TOKEN);
 
-// and deploy your commands!
+// Deploy your commands
 (async () => {
   try {
+    await loadCommands(); // Load commands before deploying
+
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-    // The put method is used to fully refresh all commands in the guild with the current set
+    // Fully refresh all commands in the guild with the current set
     const data = await rest.put(Routes.applicationGuildCommands(process.env.CLIENTID, process.env.SERVERID), {
       body: commands,
     });
 
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
-    // And of course, make sure you catch and log any errors!
-    console.error(error);
+    // Log any errors during deployment
+    console.error('Failed to deploy commands:', error);
   }
 })();

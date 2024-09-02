@@ -75,7 +75,8 @@ Interact with the bot in your Discord server using the defined command prefix.
 Here are some example commands you can use with TalkTalk:
 
  * /ping - Check if the bot is online.
- * /weather <city> - Get the current weather for a specified city
+ * /weather <city> - Get the current weather for a specified city.
+ * /play - <song> - Add your YouTube URL and play a song from YouTube in a voice channel.
 
 ## License
 
