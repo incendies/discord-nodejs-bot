@@ -2,6 +2,7 @@ import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { config } from 'dotenv';
 
 import * as talktalk from './commands/talktalk.js';
+import * as weather from './commands/weather.js';
 
 config();
 
@@ -23,6 +24,8 @@ async function handleInteraction(interaction) {
   } else if (interaction.commandName === 'ping') {
     const pingCommand = await import('./commands/ping.js');
     await pingCommand.execute(interaction);
+  } else if (interaction.commandName === 'weather') {
+    await weather.execute(interaction);
   }
 }
 
