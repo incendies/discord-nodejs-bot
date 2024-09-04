@@ -77,7 +77,10 @@ Here are some example commands you can use with TalkTalk:
  * /ping - Check if the bot is online.
  * /weather <city> - Get the current weather for a specified city.
  * /play - <song> - Add your YouTube URL and play a song from YouTube in a voice channel. 
- * /stop - <song> - this command will stop the playing music but ensure your bot can connect to the voice channel and has permissions to stop the music 
+ * /stop - <song> - this command will stop the playing music but ensure your bot can connect to the voice channel and has permissions to stop the music
+ * /imgur [query] - Search for an image on Imgur.com and return the best result. [You have to add your Imgur API to inside of the .env file]
+
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.

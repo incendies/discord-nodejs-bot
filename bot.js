@@ -8,8 +8,10 @@ import * as talktalk from './commands/talktalk.js';
 import * as weather from './commands/weather.js';
 import * as play from './commands/play.js';
 import * as stop from './commands/stop.js';
+import * as ping from './commands/ping.js'; 
+import * as imgur from './commands/imgur.js';  // Import imgur command
 
-config(); // 
+config(); // Load environment variables from .env file
 
 const client = new Client({
   intents: [
@@ -30,6 +32,8 @@ async function registerCommands() {
       play.data.toJSON(),
       stop.data.toJSON(),
       weather.data.toJSON(),
+      imgur.data.toJSON(),  // Register the imgur command
+      ping.data.toJSON()
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -58,14 +62,15 @@ async function handleInteraction(interaction) {
     if (interaction.commandName === 'talktalk') {
       await talktalk.execute(interaction);
     } else if (interaction.commandName === 'ping') {
-      const pingCommand = await import('./commands/ping.js');
-      await pingCommand.execute(interaction);
+      await ping.execute(interaction);
     } else if (interaction.commandName === 'weather') {
       await weather.execute(interaction);
     } else if (interaction.commandName === 'play') {
       await play.execute(interaction, player);
     } else if (interaction.commandName === 'stop') {
       await stop.execute(interaction);
+    } else if (interaction.commandName === 'imgur') {
+      await imgur.execute(interaction);  // Corrected this line
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
