@@ -1,43 +1,56 @@
-// Suppress punycode deprecation warning
-process.on('warning', (warning) => {
-  if (warning.name === 'DeprecationWarning' && warning.message.includes('punycode')) {
-    return; // Skip punycode deprecation warnings
-  }
-  console.warn(warning.name, warning.message, warning.stack);
-});
-
 import { Client, Events, GatewayIntentBits } from 'discord.js';
 import { config } from 'dotenv';
 import { Player } from 'discord-player';
 import { YoutubeiExtractor } from 'discord-player-youtubei';
-
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
 import * as talktalk from './commands/talktalk.js';
 import * as weather from './commands/weather.js';
-import * as play from './commands/play.js'; 
+import * as play from './commands/play.js';
+import * as stop from './commands/stop.js';
 
-config();
+config(); // 
 
-// Create a new client instance
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildVoiceStates,
-    GatewayIntentBits.GuildMessages, 
+    GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent
   ],
 });
-
-// Create a new instance of the player
 const player = new Player(client);
+
+const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
+
+async function registerCommands() {
+  try {
+    const commands = [
+      talktalk.data.toJSON(),
+      play.data.toJSON(),
+      stop.data.toJSON(),
+      weather.data.toJSON(),
+    ];
+
+    const rest = new REST({ version: '10' }).setToken(TOKEN);
+    console.log(`Registering commands for application ID: ${CLIENT_ID}`);
+    await rest.put(Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID), {
+      body: commands,
+    });
+
+    console.log('Commands registered successfully.');
+  } catch (error) {
+    console.error('Error registering commands:', error);
+  }
+}
 
 async function readyDiscord() {
   console.log('Talk Talk is online!', client.user.tag);
-  
-  // Initialize discord-player with YoutubeiExtractor
+
   await player.extractors.register(YoutubeiExtractor, {});
+  await registerCommands();
 }
 
-// Handle interactions
 async function handleInteraction(interaction) {
   if (!interaction.isCommand()) return;
 
@@ -51,6 +64,8 @@ async function handleInteraction(interaction) {
       await weather.execute(interaction);
     } else if (interaction.commandName === 'play') {
       await play.execute(interaction, player);
+    } else if (interaction.commandName === 'stop') {
+      await stop.execute(interaction);
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
@@ -58,9 +73,6 @@ async function handleInteraction(interaction) {
   }
 }
 
-// Set up event listeners
 client.once(Events.ClientReady, readyDiscord);
 client.on(Events.InteractionCreate, handleInteraction);
-
-// Log in to Discord
-client.login(process.env.TOKEN);
+client.login(TOKEN);

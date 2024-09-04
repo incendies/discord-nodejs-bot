@@ -1,7 +1,3 @@
-// Slash Commands Deployment Script
-// https://discordjs.guide/creating-your-bot/command-deployment.html#guild-commands/
-
-import { REST, Routes } from 'discord.js';
 import { config } from 'dotenv';
 import fs from 'node:fs';
 
@@ -29,20 +25,35 @@ async function loadCommands() {
   }
 }
 
-// Construct and prepare an instance of the REST module
-const rest = new REST().setToken(process.env.TOKEN);
+// Dynamically import REST and Routes based on Discord.js version
+async function getRESTAndRoutes() {
+  try {
+    const { REST, Routes } = await import('discord.js');
+    return { REST, Routes };
+  } catch {
+    const { REST } = await import('@discordjs/rest');
+    const { Routes } = await import('discord-api-types/v9');
+    return { REST, Routes };
+  }
+}
 
 // Deploy your commands
 (async () => {
   try {
     await loadCommands(); // Load commands before deploying
 
+    const { REST, Routes } = await getRESTAndRoutes();
+
+    // Construct and prepare an instance of the REST module
+    const rest = new REST().setToken(process.env.TOKEN);
+
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
     // Fully refresh all commands in the guild with the current set
-    const data = await rest.put(Routes.applicationGuildCommands(process.env.CLIENTID, process.env.SERVERID), {
-      body: commands,
-    });
+    const data = await rest.put(
+      Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.SERVERID),
+      { body: commands }
+    );
 
     console.log(`Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
