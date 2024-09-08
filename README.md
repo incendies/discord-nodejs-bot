@@ -79,6 +79,7 @@ Here are some example commands you can use with TalkTalk:
  * /play - <song> - Add your YouTube URL and play a song from YouTube in a voice channel. 
  * /stop - <song> - this command will stop the playing music but ensure your bot can connect to the voice channel and has permissions to stop the music
  * /imgur [query] - Search for an image on Imgur.com and return the best result. [You have to add your Imgur API to inside of the .env file]
+ * /joke - The joke command retrieves a random joke to lighten the mood in your server.
 
 
 ## License
