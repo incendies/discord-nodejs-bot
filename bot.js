@@ -11,6 +11,7 @@ import * as stop from './commands/stop.js';
 import * as ping from './commands/ping.js'; 
 import * as imgur from './commands/imgur.js';  // Import imgur command
 import * as joke from './commands/joke.js';  // Import joke command
+import * as trivia from './commands/trivia.js';  // Import trivia command
 
 config(); // Load environment variables from .env file
 
@@ -36,6 +37,7 @@ async function registerCommands() {
       imgur.data.toJSON(),  // Register the imgur command
       ping.data.toJSON(),
       joke.data.toJSON(),
+      trivia.data.toJSON(),
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -75,6 +77,8 @@ async function handleInteraction(interaction) {
       await imgur.execute(interaction);  // Corrected this line
     } else if (interaction.commandName === 'joke') {
       await joke.execute(interaction);
+    } else if (interaction.commandName === 'trivia') {
+      await trivia.execute(interaction);
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
