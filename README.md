@@ -80,6 +80,7 @@ Here are some example commands you can use with TalkTalk:
  * /stop - <song> - this command will stop the playing music but ensure your bot can connect to the voice channel and has permissions to stop the music
  * /imgur [query] - Search for an image on Imgur.com and return the best result. [You have to add your Imgur API to inside of the .env file]
  * /joke - The joke command retrieves a random joke to lighten the mood in your server.
+ * /quote - This command will retrieve a random quote, providing a bit of inspiration or wisdom. The quote is sourced from an external API (ZenQuotes), and will include both the quote itself and the name of the author. If the API request fails, an error message will be shown.
 
 
 ## License
