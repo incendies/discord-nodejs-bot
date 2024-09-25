@@ -82,6 +82,7 @@ Here are some example commands you can use with TalkTalk:
  * /joke - The joke command retrieves a random joke to lighten the mood in your server.
  * /quote - this command will retrieve a random quote, providing a bit of inspiration or wisdom. The quote is sourced from an external API (ZenQuotes), and will include both the quote itself and the name of the author. If the API request fails, an error message will be shown.
  * /news - this command fetches and displays the latest gaming news using the [NewsAPI](https://newsapi.org/) service. Users can request the top headlines from the gaming category, and the bot will respond with the latest articles and their links.
+ * /remindme - this command allows you to set a personal reminder for yourself after a specified time interval. The bot will send a follow-up message when the time is up.
 
 
 ## License
