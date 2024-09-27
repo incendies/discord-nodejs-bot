@@ -15,6 +15,7 @@ import * as trivia from './commands/trivia.js';  // Import trivia command
 import * as quote from './commands/quote.js';  // Import quote command
 import * as news from './commands/news.js';  // Import news command
 import * as remindme from './commands/remindme.js';  // Import remindme command
+import * as math from './commands/math.js';  // Import math command
 
 config(); // Load environment variables from .env file
 
@@ -44,6 +45,7 @@ async function registerCommands() {
       quote.data.toJSON(),
       news.data.toJSON(),
       remindme.data.toJSON(),
+      math.data.toJSON(),
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -91,6 +93,8 @@ async function handleInteraction(interaction) {
       await news.execute(interaction);
     } else if (interaction.commandName === 'remindme') {
       await remindme.execute(interaction);
+    } else if (interaction.commandName === 'math') {
+      await math.execute(interaction);
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
