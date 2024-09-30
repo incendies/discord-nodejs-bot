@@ -9,13 +9,14 @@ import * as weather from './commands/weather.js';
 import * as play from './commands/play.js';
 import * as stop from './commands/stop.js';
 import * as ping from './commands/ping.js'; 
-import * as imgur from './commands/imgur.js';  // Import imgur command
-import * as joke from './commands/joke.js';  // Import joke command
-import * as trivia from './commands/trivia.js';  // Import trivia command
-import * as quote from './commands/quote.js';  // Import quote command
-import * as news from './commands/news.js';  // Import news command
-import * as remindme from './commands/remindme.js';  // Import remindme command
-import * as math from './commands/math.js';  // Import math command
+import * as imgur from './commands/imgur.js';  
+import * as joke from './commands/joke.js';  
+import * as trivia from './commands/trivia.js';  
+import * as quote from './commands/quote.js';  
+import * as news from './commands/news.js';  
+import * as remindme from './commands/remindme.js';  
+import * as math from './commands/math.js';  
+import * as userstats from './commands/userstats.js'; // Import userstats command
 
 config(); // Load environment variables from .env file
 
@@ -27,8 +28,8 @@ const client = new Client({
     GatewayIntentBits.MessageContent
   ],
 });
-const player = new Player(client);
 
+const player = new Player(client);
 const { TOKEN, CLIENT_ID, GUILD_ID } = process.env;
 
 async function registerCommands() {
@@ -38,7 +39,7 @@ async function registerCommands() {
       play.data.toJSON(),
       stop.data.toJSON(),
       weather.data.toJSON(),
-      imgur.data.toJSON(),  // Register the imgur command
+      imgur.data.toJSON(),
       ping.data.toJSON(),
       joke.data.toJSON(),
       trivia.data.toJSON(),
@@ -46,6 +47,7 @@ async function registerCommands() {
       news.data.toJSON(),
       remindme.data.toJSON(),
       math.data.toJSON(),
+      userstats.data.toJSON(), // Register the userstats command
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -71,6 +73,11 @@ async function handleInteraction(interaction) {
   if (!interaction.isCommand()) return;
 
   try {
+    const userId = interaction.user.id;
+
+    // Track the command usage for the user
+    userstats.incrementUserCommandCount(userId); // Increment user command count
+
     if (interaction.commandName === 'talktalk') {
       await talktalk.execute(interaction);
     } else if (interaction.commandName === 'ping') {
@@ -82,7 +89,7 @@ async function handleInteraction(interaction) {
     } else if (interaction.commandName === 'stop') {
       await stop.execute(interaction);
     } else if (interaction.commandName === 'imgur') {
-      await imgur.execute(interaction);  // Corrected this line
+      await imgur.execute(interaction);
     } else if (interaction.commandName === 'joke') {
       await joke.execute(interaction);
     } else if (interaction.commandName === 'trivia') {
@@ -95,6 +102,8 @@ async function handleInteraction(interaction) {
       await remindme.execute(interaction);
     } else if (interaction.commandName === 'math') {
       await math.execute(interaction);
+    } else if (interaction.commandName === 'userstats') {
+      await userstats.execute(interaction); // Call the userstats command
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
