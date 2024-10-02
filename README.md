@@ -83,6 +83,9 @@ Here are some example commands you can use with TalkTalk:
  * /quote - this command will retrieve a random quote, providing a bit of inspiration or wisdom. The quote is sourced from an external API (ZenQuotes), and will include both the quote itself and the name of the author. If the API request fails, an error message will be shown.
  * /news - this command fetches and displays the latest gaming news using the [NewsAPI](https://newsapi.org/) service. Users can request the top headlines from the gaming category, and the bot will respond with the latest articles and their links.
  * /remindme - this command allows you to set a personal reminder for yourself after a specified time interval. The bot will send a follow-up message when the time is up.
+ * /userstats - Get your command usage statistics. This command will display how many commands you have executed with the bot.
+
+ * /currency - [amount] [from_currency] [to_currency] - Convert any amount between two currencies using the latest exchange rates from Open Exchange Rates. Example: /currency 100 USD EUR. You'll need to provide your Open Exchange Rates API key in the .env file.
 
 
 ## License

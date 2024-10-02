@@ -25,6 +25,7 @@
     "dotenv": "^16.4.5",
     "ffmpeg-static": "^5.2.0",
     "html-entities": "^2.5.2",
+    "node-fetch": "^3.3.2",
     "opusscript": "^0.0.8",
     "play-dl": "^1.9.7",
     "yt-search": "^2.12.1",
