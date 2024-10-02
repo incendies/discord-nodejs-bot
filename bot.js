@@ -17,7 +17,7 @@ import * as news from './commands/news.js';
 import * as remindme from './commands/remindme.js';  
 import * as math from './commands/math.js';  
 import * as userstats from './commands/userstats.js'; 
-import * as currency from './commands/currency.js'; // Import the currency command
+import * as currency from './commands/currency.js'; 
 
 config(); // Load environment variables from .env file
 
@@ -49,7 +49,7 @@ async function registerCommands() {
       remindme.data.toJSON(),
       math.data.toJSON(),
       userstats.data.toJSON(),
-      currency.data.toJSON(), // Add the currency command to the list of commands
+      currency.data.toJSON(), 
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -107,7 +107,7 @@ async function handleInteraction(interaction) {
     } else if (interaction.commandName === 'userstats') {
       await userstats.execute(interaction); 
     } else if (interaction.commandName === 'currency') {
-      await currency.execute(interaction); // Call the currency command
+      await currency.execute(interaction);
     } 
   } catch (error) {
     console.error('Error handling interaction:', error);
