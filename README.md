@@ -86,7 +86,7 @@ Here are some example commands you can use with TalkTalk:
  * /userstats - Get your command usage statistics. This command will display how many commands you have executed with the bot.
 
  * /currency - [amount] [from_currency] [to_currency] - Convert any amount between two currencies using the latest exchange rates from Open Exchange Rates. Example: /currency 100 USD EUR. You'll need to provide your Open Exchange Rates API key in the .env file.
-
+  * /help - this command will display a list of all available commands.
 
 ## License
 
