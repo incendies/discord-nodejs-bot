@@ -4,6 +4,7 @@ import { Player } from 'discord-player';
 import { YoutubeiExtractor } from 'discord-player-youtubei';
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import fs from 'fs';
 import * as talktalk from './commands/talktalk.js';
 import * as weather from './commands/weather.js';
 import * as play from './commands/play.js';
@@ -19,7 +20,7 @@ import * as math from './commands/math.js';
 import * as userstats from './commands/userstats.js'; 
 import * as currency from './commands/currency.js'; 
 import * as help from './commands/help.js';
-import fs from 'fs';
+import * as serverinfo from './commands/serverinfo.js';
 
 config(); // Load environment variables from .env file
 
@@ -63,7 +64,8 @@ async function registerCommands() {
       math.data.toJSON(),
       userstats.data.toJSON(),
       currency.data.toJSON(), 
-      help.data.toJSON()
+      help.data.toJSON(),
+      serverinfo.data.toJSON()
     ];
 
     const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -124,6 +126,8 @@ async function handleInteraction(interaction) {
       await currency.execute(interaction);
     } else if (interaction.commandName === 'help') {
       await help.execute(interaction);
+    } else if (interaction.commandName === 'serverinfo') {
+      await serverinfo.execute(interaction);
     }
   } catch (error) {
     console.error('Error handling interaction:', error);
